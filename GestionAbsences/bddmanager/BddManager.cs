@@ -131,7 +131,7 @@ namespace GestionAbsences.bddmanager
 
         private void OuvrirConnexion()
         {
-            if (connection != null && connection.State == System.Data.ConnectionState.Closed)
+            if (connection.State == System.Data.ConnectionState.Closed)
             {
                 connection.Open();
             }
@@ -139,7 +139,7 @@ namespace GestionAbsences.bddmanager
 
         private void FermerConnexion()
         {
-            if (connection != null && connection.State == System.Data.ConnectionState.Open)
+            if (connection.State == System.Data.ConnectionState.Open)
             {
                 connection.Close();
             }
