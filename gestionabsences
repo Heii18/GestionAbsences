@@ -1,0 +1,159 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le : ven. 29 mai 2026 à 22:48
+-- Version du serveur : 8.4.7
+-- Version de PHP : 8.3.28
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `gestionabsences`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `absence`
+--
+
+DROP TABLE IF EXISTS `absence`;
+CREATE TABLE IF NOT EXISTS `absence` (
+  `idpersonnel` int NOT NULL,
+  `datedebut` datetime NOT NULL,
+  `datefin` datetime DEFAULT NULL,
+  `idmotif` int NOT NULL,
+  PRIMARY KEY (`idpersonnel`,`datedebut`),
+  KEY `idmotif` (`idmotif`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `absence`
+--
+
+INSERT INTO `absence` (`idpersonnel`, `datedebut`, `datefin`, `idmotif`) VALUES
+(3, '2026-10-02 00:00:00', '2027-05-21 00:00:00', 2),
+(5, '2026-07-01 00:00:00', '2026-10-29 00:00:00', 1),
+(4, '2026-03-20 00:00:00', '2026-05-12 00:00:00', 2),
+(2, '2026-04-12 00:00:00', '2026-07-27 00:00:00', 4),
+(3, '2025-06-06 00:00:00', '2027-01-19 00:00:00', 2),
+(3, '2026-05-28 00:00:00', '2026-06-25 00:00:00', 4),
+(5, '2026-05-28 00:00:00', '2026-05-29 00:00:00', 4),
+(4, '2026-06-03 00:00:00', '2026-07-24 00:00:00', 1),
+(2, '2026-05-28 00:00:00', '2026-05-29 00:00:00', 4),
+(3, '2026-05-29 00:00:00', '2026-05-30 00:00:00', 4),
+(1, '2026-05-29 00:00:00', '2026-05-30 00:00:00', 4),
+(6, '2026-05-29 00:00:00', '2026-05-31 00:00:00', 1),
+(5, '2026-05-29 00:00:00', '2026-06-01 00:00:00', 3),
+(4, '2026-11-26 00:00:00', '2026-12-01 00:00:00', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `motif`
+--
+
+DROP TABLE IF EXISTS `motif`;
+CREATE TABLE IF NOT EXISTS `motif` (
+  `idmotif` int NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(128) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`idmotif`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `motif`
+--
+
+INSERT INTO `motif` (`idmotif`, `libelle`) VALUES
+(1, 'Vacances'),
+(2, 'Maladie'),
+(3, 'Motif familial'),
+(4, 'Congé parental');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `personnel`
+--
+
+DROP TABLE IF EXISTS `personnel`;
+CREATE TABLE IF NOT EXISTS `personnel` (
+  `idpersonnel` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `prenom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tel` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mail` varchar(128) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `idservice` int NOT NULL,
+  PRIMARY KEY (`idpersonnel`),
+  KEY `idservice` (`idservice`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `personnel`
+--
+
+INSERT INTO `personnel` (`idpersonnel`, `nom`, `prenom`, `tel`, `mail`, `idservice`) VALUES
+(1, 'Valdez', 'Irene', '(648) 618-5477', 'mollis@icloud.couk', 3),
+(3, 'Jean', 'Scarlet', '1-568-419-8464', 'risus.odio@yahoo.net', 3),
+(4, 'Landry', 'Jason', '(771) 816-1894', 'ligula.tortor.dictum@outlook.couk', 2),
+(5, 'Heath', 'Nathaniel', '1-877-360-3897', 'consequat@protonmail.com', 2),
+(10, 'Dupuis', 'Nicolas', '0683435317', 'DupuisNicolas@gmail.com', 1),
+(9, 'Jean', 'Dupont', '063453642312', 'JeanDupont@gmail.com', 1),
+(11, 'Dufous', 'Benjamin', '06438925312', 'BenjaminDufous', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `responsable`
+--
+
+DROP TABLE IF EXISTS `responsable`;
+CREATE TABLE IF NOT EXISTS `responsable` (
+  `login` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `pwd` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `responsable`
+--
+
+INSERT INTO `responsable` (`login`, `pwd`) VALUES
+('admin', 'b8b8eb83374c0bf3b1c3224159f6119dbfff1b7ed6dfecdd80d4e8a895790a34'),
+('admin', '6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+CREATE TABLE IF NOT EXISTS `service` (
+  `idservice` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`idservice`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `service`
+--
+
+INSERT INTO `service` (`idservice`, `nom`) VALUES
+(1, 'Administratif'),
+(2, 'Médiation culturelle'),
+(3, 'Prêt');
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
